@@ -1,0 +1,217 @@
+{
+  "model": "jev-1.13.0",
+  "answers": {
+    "education_bachelor_or_above": {
+      "type": "noul",
+      "noul": 0.99,
+      "stats": {}
+    },
+    "written_english_evidence": {
+      "type": "noul",
+      "noul": 0.97,
+      "stats": {}
+    },
+    "ai_products_heavy_use": {
+      "type": "noul",
+      "noul": 0.98,
+      "stats": {}
+    },
+    "efficiency_tools_in_work": {
+      "type": "noul",
+      "noul": 0.98,
+      "stats": {}
+    },
+    "exceptional_pursuit": {
+      "type": "noul",
+      "noul": 0.91,
+      "stats": {}
+    },
+    "user_community_work_depth": {
+      "type": "score",
+      "score": 3,
+      "legend": {
+        "0": {
+          "what": "No user-facing or community experience",
+          "signals": [
+            "Resume describes purely internal or technical work",
+            "No mention of users, customers, or communities"
+          ]
+        },
+        "1": {
+          "what": "Incidental touchpoints only",
+          "signals": [
+            "Occasionally answered tickets or supported events",
+            "User contact was a side duty, not owned"
+          ]
+        },
+        "2": {
+          "what": "Substantial owned experience",
+          "signals": [
+            "Owned a feedback channel or community program",
+            "Systematically collected and organized user feedback",
+            "Ran surveys or interviews themselves"
+          ]
+        },
+        "3": {
+          "what": "Deep and sustained, closed-loop",
+          "signals": [
+            "Built and operated communities or feedback loops as a core responsibility",
+            "Turned user signals into concrete product or process changes",
+            "Tracked issues to resolution across teams"
+          ]
+        }
+      },
+      "confidence": 1,
+      "probabilities": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 1
+      },
+      "stats": {}
+    },
+    "data_and_metrics_ability": {
+      "type": "score",
+      "score": 2.18,
+      "legend": {
+        "0": {
+          "what": "No data analysis experience",
+          "signals": [
+            "No metrics, analysis, or dashboards mentioned"
+          ]
+        },
+        "1": {
+          "what": "Consumed data defined by others",
+          "signals": [
+            "Read dashboards or reports",
+            "Used metrics in routine reporting without defining them"
+          ]
+        },
+        "2": {
+          "what": "Ran own analyses that informed decisions, or co-built metrics owned by others",
+          "signals": [
+            "Funnel, retention, or behavior analysis with a described outcome",
+            "Survey design and analysis",
+            "A/B test interpretation",
+            "Co-defined metrics with analysts or PMs without owning the system"
+          ]
+        },
+        "3": {
+          "what": "Owned the definition of a metric system end-to-end (not merely co-built it), or built monitoring or alerting pipelines",
+          "signals": [
+            "Defined KPIs or north-star metrics as the owner",
+            "Built monitoring, alerting, or reporting pipelines",
+            "Drove product decisions from their own analysis"
+          ]
+        }
+      },
+      "confidence": 0.81,
+      "probabilities": {
+        "0": 0,
+        "1": 0,
+        "2": 0.8200000000000001,
+        "3": 0.18
+      },
+      "stats": {}
+    },
+    "coordination_and_delivery": {
+      "type": "score",
+      "score": 2.56,
+      "legend": {
+        "0": {
+          "what": "No cross-team coordination",
+          "signals": [
+            "Individual contributor with self-contained deliverables only"
+          ]
+        },
+        "1": {
+          "what": "Participated in cross-team projects",
+          "signals": [
+            "Contributed to projects involving other teams without owning coordination"
+          ]
+        },
+        "2": {
+          "what": "Coordinated multiple teams on defined scopes",
+          "signals": [
+            "Tracked progress and risks across teams",
+            "Organized regular syncs and follow-ups"
+          ]
+        },
+        "3": {
+          "what": "Led cross-functional efforts end-to-end — personally owned the closure, not just attended or coordinated it",
+          "signals": [
+            "Drove problems from discovery to shipped resolution",
+            "Managed risks and unblocked issues across product and engineering"
+          ]
+        }
+      },
+      "confidence": 0.56,
+      "probabilities": {
+        "0": 0,
+        "1": 0,
+        "2": 0.44,
+        "3": 0.56
+      },
+      "stats": {}
+    },
+    "signal_to_insight": {
+      "type": "score",
+      "score": 2.99,
+      "legend": {
+        "0": {
+          "what": "No evidence of insight generation",
+          "signals": [
+            "Work described as executing defined tasks only"
+          ]
+        },
+        "1": {
+          "what": "Occasional observations",
+          "signals": [
+            "Reported problems already surfaced by others"
+          ]
+        },
+        "2": {
+          "what": "Distilled fragments into useful findings",
+          "signals": [
+            "Combined scattered feedback into a root-cause finding",
+            "Identified a real need behind surface complaints"
+          ]
+        },
+        "3": {
+          "what": "Insights repeatedly drove real change",
+          "signals": [
+            "Their identification of a problem led to a shipped fix or product change",
+            "Found issues before users or leadership flagged them"
+          ]
+        }
+      },
+      "confidence": 0.99,
+      "probabilities": {
+        "0": 0,
+        "1": 0,
+        "2": 0.01,
+        "3": 0.99
+      },
+      "stats": {}
+    },
+    "dominant_background": {
+      "type": "choice",
+      "choice": "user_or_community_ops",
+      "confidence": 1,
+      "probabilities": {
+        "engineering_or_research": 0,
+        "product_or_project_ops": 0,
+        "other_or_unclassifiable": 0,
+        "user_or_community_ops": 1,
+        "data_or_analyst": 0
+      },
+      "stats": {}
+    }
+  },
+  "usage": {
+    "input_tokens": 3953,
+    "output_tokens": 252
+  },
+  "request_id": "playground_1b64bf2ce43d4e44e9692e62ff674ec6098",
+  "evaluation_time_ms": 172.15919800219126
+}

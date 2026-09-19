@@ -1,0 +1,313 @@
+{
+  "state": {
+    "job": {
+      "title": "User & Community Operations",
+      "team": "DeepSeek Operations",
+      "mission": "Own the end-user experience from the user's perspective: proactively collect real feedback, identify what matters, and drive it to resolution.",
+      "responsibilities": [
+        "Proactively collect user feedback from communities, interviews, surveys, tickets, and social media.",
+        "Build and maintain user communities and feedback channels; turn scattered signals into clear, actionable input for product and engineering; improve operations processes with pre-release evaluation and post-release follow-up.",
+        "Build the operations data system: define and measure whether the product helps more people in more scenarios; analyze user behavior and core problems to inform product decisions; collaborate on monitoring and alerting.",
+        "Coordinate product, engineering, and research resources; track progress and risks; drive problems to closed-loop resolution.",
+        "Write clear user-facing communication for releases and version changes."
+      ],
+      "requirements": {
+        "min_education": "Bachelor's degree or above",
+        "traits": [
+          "Reliable and responsible; drives work proactively, keeps others informed, and finishes what is started",
+          "Enjoys user and community work; willing to do detail-heavy but important work for the long term",
+          "Strong perception of users and products; spots real needs and key problems in fragmented information",
+          "Excellent Chinese communication; able to communicate in written English"
+        ],
+        "skills": [
+          "User research",
+          "Data analysis",
+          "Project management",
+          "Familiarity with AI and Agent products; heavy user of AI products"
+        ],
+        "preferred": [
+          "AI industry or AI product operations experience",
+          "Agent, SQL, or Python used to improve work efficiency",
+          "Small-team cross-functional project experience",
+          "Deep participation in technical or user communities",
+          "One pursuit taken to exceptional depth, even if unrelated to the role",
+          "Other extraordinary job-related talents"
+        ]
+      }
+    },
+    "resume": {
+      "full_text": "Xiao Ming\nTarget: User & Community Operations\n\n[Summary]\nCS bachelor's, 5 years of user and community operations experience in internet companies. Grew from front-line support into community lead; skilled at turning scattered user voices into actionable input for product teams and driving issues to closed-loop resolution. Heavy AI product user; routinely uses SQL, Python, and agents to improve efficiency.\n\n[Experience]\nYuntu Tech (HR SaaS) | User Operations -> Senior User Operations | Jun 2023 - Present\n- Built and operated the official user community from 0 to 12,000 members; 3,000+ monthly interactions\n- Set up a feedback matrix of 8 user groups + surveys + NPS; 500+ raw feedback items collected monthly\n- Authored a monthly \"Voice of Users\" digest converting fragmented feedback into actionable issue lists; 17 product improvements shipped as a result\n- Distilled 300+ fragmented mobile complaints into \"image loading failure\" as the top churn driver; after coordinating the fix with product and engineering, App Store negative-review rate dropped 40%\n- Co-built a community health metric system with data analysts (feedback closure time, self-help answer rate, engagement depth); reviewed weekly\n- Extracted ticket and behavior data with SQL; wrote Python scripts to auto-classify feedback, cutting weekly reporting from 6 hours to 1\n- Organized biweekly product-engineering-ops scoping syncs; maintained a cross-team risk list tracking 20+ requests\n\nQiming Online Education | Community Operations Specialist | Jul 2021 - May 2023\n- Operated 30+ student WeChat groups (~9,000 members): Q&A, event announcements, sentiment logging\n- Handled ~200 tickets/week with first response under 2 hours\n- Ran a monthly live Q&A averaging 800 attendees; distilled frequent issues into 40+ self-service docs, reducing ticket volume by 18%\n- Won quarterly \"Service Star\" award twice\n\n[Personal Project]\nFounder & Operator, \"AI Exploration Station\" | Mar 2022 - Present (spare time)\n- Built an AI-app community from scratch to 12,000 members across WeChat official account, Zhishixingqiu, and Discord\n- Published a weekly AI tooling newsletter, 140+ consecutive issues without a break\n- Wrote announcements and answered questions in English for international members; Discord English channel 200+ daily active users\n\n[Education]\nSouth China University of Technology | Software Engineering | Bachelor | Sep 2017 - Jun 2021\n\n[Skills & Languages]\n- Tools: SQL (daily at work), Python (data cleaning & automation scripts), Dify (built a ticket auto-triage agent)\n- AI products: heavy daily DeepSeek user; paid ChatGPT Plus and Claude Pro subscriber for two years\n- English: CET-6 590; independently write English announcements and answer community questions in English\n- Took an ML elective in college with a TensorFlow course project"
+    }
+  },
+  "questions": {
+    "education_bachelor_or_above": {
+      "type": "noul",
+      "instructions": "Does `resume.full_text` state that the candidate holds, or is on track to complete, a bachelor's degree or above, as required by `job.requirements.min_education`?",
+      "criteria": {
+        "true": {
+          "what": "Resume states a bachelor's, master's, or higher degree, or an expected graduation with one",
+          "examples": [
+            "本科",
+            "Bachelor of Engineering",
+            "预计2026年6月获学士学位"
+          ]
+        },
+        "false": {
+          "what": "Resume states only associate degree, high school, or no degree information at all",
+          "not_for": "Degree in progress at a level below bachelor, or unrelated certificates mistaken for degrees"
+        }
+      }
+    },
+    "written_english_evidence": {
+      "type": "noul",
+      "instructions": "Does `resume.full_text` provide concrete evidence of written English ability, as required by `job.requirements.traits[3]`?",
+      "criteria": {
+        "true": {
+          "what": "States an English certification or shows English used as a working written language",
+          "examples": [
+            "CET-6 580",
+            "IELTS 7.0",
+            "撰写英文发布公告",
+            "Maintained English documentation for international users"
+          ]
+        },
+        "false": {
+          "what": "No evidence of written English anywhere in the resume",
+          "not_for": "Merely listing 'English' as a skill with no supporting detail"
+        }
+      }
+    },
+    "ai_products_heavy_use": {
+      "type": "noul",
+      "instructions": "Does `resume.full_text` indicate the candidate is a heavy, habitual user of AI or Agent products, as required by `job.requirements.skills[3]`?",
+      "criteria": {
+        "true": {
+          "what": "Describes routine, intensive use or building on AI/Agent products",
+          "examples": [
+            "DeepSeek / ChatGPT / Claude 日常重度使用",
+            "Built personal agent workflows on Coze/Dify",
+            "调用 LLM API 完成自动化脚本",
+            "自费订阅多个 AI 产品"
+          ]
+        },
+        "false": {
+          "what": "No AI product usage mentioned, or only passing, one-off mention",
+          "not_for": "Having merely heard of these products, or using one app occasionally"
+        }
+      }
+    },
+    "efficiency_tools_in_work": {
+      "type": "noul",
+      "instructions": "Does `resume.full_text` show the candidate used SQL, Python, agents, or similar automation tools in real work, as preferred in `job.requirements.preferred[1]`?",
+      "criteria": {
+        "true": {
+          "what": "Used such tools to accomplish actual work with a described outcome",
+          "examples": [
+            "用 SQL 提取并分析工单数据",
+            "Wrote Python scripts to batch-tag survey responses",
+            "用 Agent 自动化周报汇总"
+          ]
+        },
+        "false": {
+          "what": "No mention of these tools, or mentioned only as a skill keyword with no usage",
+          "not_for": "Coursework-only exposure with no application described"
+        }
+      }
+    },
+    "exceptional_pursuit": {
+      "type": "noul",
+      "instructions": "Does `resume.full_text` describe one pursuit the candidate took to exceptional depth or excellence, even if unrelated to this role, as noted in `job.requirements.preferred[4]`?",
+      "criteria": {
+        "true": {
+          "what": "One sustained pursuit with unusual depth, scale, or recognized outcomes",
+          "examples": [
+            "独立维护一个 2 万订阅的技术 newsletter 三年",
+            "国家级竞赛获奖",
+            "从零建立并运营一个 5000 人社区"
+          ]
+        },
+        "false": {
+          "what": "Only routine competence spread across many areas",
+          "not_for": "Listing many skills without depth in any; one-off participation"
+        }
+      }
+    },
+    "user_community_work_depth": {
+      "type": "score",
+      "instructions": "Based on `resume.full_text` against `job.responsibilities[0]` and `job.responsibilities[1]`, how deep is the candidate's hands-on experience proactively working with users and communities?",
+      "criteria": [
+        {
+          "what": "No user-facing or community experience",
+          "signals": [
+            "Resume describes purely internal or technical work",
+            "No mention of users, customers, or communities"
+          ]
+        },
+        {
+          "what": "Incidental touchpoints only",
+          "signals": [
+            "Occasionally answered tickets or supported events",
+            "User contact was a side duty, not owned"
+          ]
+        },
+        {
+          "what": "Substantial owned experience",
+          "signals": [
+            "Owned a feedback channel or community program",
+            "Systematically collected and organized user feedback",
+            "Ran surveys or interviews themselves"
+          ]
+        },
+        {
+          "what": "Deep and sustained, closed-loop",
+          "signals": [
+            "Built and operated communities or feedback loops as a core responsibility",
+            "Turned user signals into concrete product or process changes",
+            "Tracked issues to resolution across teams"
+          ]
+        }
+      ]
+    },
+    "data_and_metrics_ability": {
+      "type": "score",
+      "instructions": "Based on `resume.full_text` against `job.responsibilities[2]`, how capable is the candidate at building data systems and analyzing user behavior?",
+      "criteria": [
+        {
+          "what": "No data analysis experience",
+          "signals": [
+            "No metrics, analysis, or dashboards mentioned"
+          ]
+        },
+        {
+          "what": "Consumed data defined by others",
+          "signals": [
+            "Read dashboards or reports",
+            "Used metrics in routine reporting without defining them"
+          ]
+        },
+        {
+          "what": "Ran own analyses that informed decisions",
+          "signals": [
+            "Funnel, retention, or behavior analysis with a described outcome",
+            "Survey design and analysis",
+            "A/B test interpretation"
+          ]
+        },
+        {
+          "what": "Defined metric systems or built monitoring",
+          "signals": [
+            "Defined KPIs or north-star metrics for a product or operation",
+            "Built monitoring, alerting, or reporting pipelines",
+            "Drove product decisions from their own analysis"
+          ]
+        }
+      ]
+    },
+    "coordination_and_delivery": {
+      "type": "score",
+      "instructions": "Based on `resume.full_text` against `job.responsibilities[3]` and `job.requirements.traits[0]`, how strong is the candidate's record of coordinating cross-team work and driving it to closed-loop resolution?",
+      "criteria": [
+        {
+          "what": "No cross-team coordination",
+          "signals": [
+            "Individual contributor with self-contained deliverables only"
+          ]
+        },
+        {
+          "what": "Participated in cross-team projects",
+          "signals": [
+            "Contributed to projects involving other teams without owning coordination"
+          ]
+        },
+        {
+          "what": "Coordinated multiple teams on defined scopes",
+          "signals": [
+            "Tracked progress and risks across teams",
+            "Organized regular syncs and follow-ups"
+          ]
+        },
+        {
+          "what": "Led cross-functional efforts end-to-end",
+          "signals": [
+            "Drove problems from discovery to shipped resolution",
+            "Managed risks and unblocked issues across product and engineering"
+          ]
+        }
+      ]
+    },
+    "signal_to_insight": {
+      "type": "score",
+      "instructions": "Based on `resume.full_text` against `job.requirements.traits[2]`, how well does the candidate demonstrate spotting real needs and key problems from fragmented information?",
+      "criteria": [
+        {
+          "what": "No evidence of insight generation",
+          "signals": [
+            "Work described as executing defined tasks only"
+          ]
+        },
+        {
+          "what": "Occasional observations",
+          "signals": [
+            "Reported problems already surfaced by others"
+          ]
+        },
+        {
+          "what": "Distilled fragments into useful findings",
+          "signals": [
+            "Combined scattered feedback into a root-cause finding",
+            "Identified a real need behind surface complaints"
+          ]
+        },
+        {
+          "what": "Insights repeatedly drove real change",
+          "signals": [
+            "Their identification of a problem led to a shipped fix or product change",
+            "Found issues before users or leadership flagged them"
+          ]
+        }
+      ]
+    },
+    "dominant_background": {
+      "type": "choice",
+      "instructions": "Which background best describes where `resume.full_text` experience is concentrated? Used to route the candidate to the right reviewer.",
+      "criteria": {
+        "user_or_community_ops": {
+          "what": "User operations, community management, customer success, or support",
+          "not_for": "Product feature planning or pure data analysis roles",
+          "examples": [
+            "用户运营专员",
+            "Community manager at a SaaS company"
+          ]
+        },
+        "product_or_project_ops": {
+          "what": "Product operations, project management, or cross-team program coordination",
+          "not_for": "Hands-on community daily interaction",
+          "examples": [
+            "产品运营",
+            "Program manager coordinating releases"
+          ]
+        },
+        "data_or_analyst": {
+          "what": "Data analysis or business intelligence as the main role",
+          "not_for": "Casual use of Excel in another role",
+          "examples": [
+            "数据分析师",
+            "BI engineer"
+          ]
+        },
+        "engineering_or_research": {
+          "what": "Software engineering, ML, or research as the main role",
+          "not_for": "Using AI products as an end user",
+          "examples": [
+            "后端工程师",
+            "Research assistant"
+          ]
+        },
+        "other_or_unclassifiable": {
+          "what": "Student, fresh graduate with no clear background, or mixed profiles not dominated by any option",
+          "not_for": "Profiles that clearly fit one of the options above"
+        }
+      }
+    }
+  }
+}
