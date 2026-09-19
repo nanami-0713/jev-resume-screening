@@ -122,15 +122,20 @@ resume-jd-matching/
 │   ├── CN-test-result-v2.json · EN-test-result-v2.json       # v2 判据 · 小明
 │   ├── control-A-result.json · control-B-result.json         # 负对照 · v2 判据
 │   └── CN/EN-test-result-v3.json · control-A/B-result-v3.json # v3 回归 · 四例全量
-└── archive/
-    ├── v1-requests/                     # v1 请求（对应 CN/EN-test-result.json）
-    │   ├── jev-screening-xiaoming-CN.json
-    │   └── jev-screening-xiaoming-EN.json
-    └── v2-requests/                     # v2 请求（对应 *-v2 与 control-*-result 结果）
-        ├── jev-screening-xiaoming-CN.json
-        ├── jev-screening-xiaoming-EN.json
-        ├── jev-screening-control-A-unqualified.json
-        └── jev-screening-control-B-glossy-trap.json
+├── archive/
+│   ├── v1-requests/                     # v1 请求（对应 CN/EN-test-result.json）
+│   │   ├── jev-screening-xiaoming-CN.json
+│   │   └── jev-screening-xiaoming-EN.json
+│   └── v2-requests/                     # v2 请求（对应 *-v2 与 control-*-result 结果）
+│       ├── jev-screening-xiaoming-CN.json
+│       ├── jev-screening-xiaoming-EN.json
+│       ├── jev-screening-control-A-unqualified.json
+│       └── jev-screening-control-B-glossy-trap.json
+└── webapp/                              # 网站工作台（node server.mjs 启动，详见第 10 节）
+    ├── index.html / app.js / style.css  # 四步流程前端（纯 vanilla，无构建步骤）
+    ├── criteria.js                      # 判据校验器 + 合成评分/路由逻辑（浏览器与 Node 测试共用）
+    ├── server.mjs                       # 零依赖本地代理（静态服务 + Jev/LLM 转发，仅监听 127.0.0.1）
+    └── demo-data.js                     # 内置演示：小明简历 + JD 原文 + v3 判据
 ```
 
 ## 6. 如何使用
@@ -233,11 +238,34 @@ route_to(a["dominant_background"].choice)
 - [x] 用 `requests/`（v2）重跑小明 CN/EN，验证 data / coordination 两题回落（2026-09-19：data → 2.18 且中英一致；coordination → 2.56/2.60、置信 0.56/0.60，详见第 4 节）
 - [x] 跑负对照 Case A / Case B（2026-09-19：A 十题全中 ≈0.12；B ≈0.67 < 0.8 红线，机制通过；暴露 ai 题"声称 vs 证据"判据缺口，见第 8 节）
 - [x] v3 判据修订并四例回归（2026-09-19：B ai 0.95→0.49、exceptional 0.81→0.79；小明与 A 零漂移，判据封版 v3，见第 4 节）
+- [x] Web 工作台：简历+JD → 判据 → Jev 评估的完整网站（2026-09-19：代理层与浏览器端到端均验证通过，见第 10 节）
+- [ ] Web：PDF 简历解析（当前支持粘贴或上传 .txt/.md）
+- [ ] Web：判据生成质量评测（跨 LLM 供应商对比 prompt 遵循度）
 - [ ] 写批量脚本：多简历并发 + 结果 CSV 落表
 - [ ] 阈值校准：自有数据上画"置信度-准确率"曲线，定 0.7/0.9 门槛
 - [ ] 对照实验：同一批中文简历，英文判据 vs 中文判据
 
-## 10. 背景资料
+## 10. Web 工作台（简历 × JD 匹配网站）
+
+把本项目的方法论包装成可用网站：用户粘贴简历与任意 JD，由通用 LLM 起草判据、Jev 做校准评估、代码合成匹配度。
+
+**启动（Node ≥ 18，零依赖）：**
+
+```bash
+cd webapp && node server.mjs   # → http://127.0.0.1:8787
+```
+
+**四步流程：** ① 配置 Jev key + 通用 LLM（OpenAI 兼容 Base URL/Key/模型，均为 BYOK，仅存浏览器 localStorage）；② 粘贴或上传简历与 JD；③ LLM 从 JD 起草判据 JSON（可手工编辑，实时 schema 校验）→ ④ 调用 Jev，渲染总分环形图、门槛状态、逐题概率条与路由建议。没有 LLM key 时可「载入演示判据」直接体验 Jev 评估（内置小明演示数据）。
+
+**架构决策（为什么需要本地代理 + 为什么需要通用 LLM）：**
+
+- **CORS**：实测 `api.typesafe.ai` 的预检响应不含 `access-control-allow-origin`（origin 不在白名单），浏览器无法直连，因此由零依赖 Node 代理转发（仅监听 127.0.0.1，key 只在内存中转发、不落盘不打印）。
+- **LLM 的分工**：Jev 每换一个 JD 都需要新判据，这一步由通用 LLM 完成——但只让它**起草**，三道护栏保证 v3 纪律不丢失：① system prompt 内嵌全部设计纪律（原子问题/证据化判据/对比式定义/英文判据/归属限定/评分方案）；② 代码层 schema 校验 + 受保护属性过滤器（年龄/性别/婚育等直接拒绝）；③ **生成后必须人工过目可编辑**再执行。LLM 不参与打分——打分永远是 Jev + 确定性代码。
+- **人在环红线延续到 UI**：路由输出全部标注"建议"，低置信自动转人工提示，页脚常驻免责声明。
+
+**验证记录（2026-09-19）：** 校验器单元测试四项全过（v3 模板通过 / 受保护属性拒绝 / 坏结构拒绝 / 用小明 v2 真实结果复现 README 合成分 0.944）；LLM 代理错误路径透传正确（上游 401 原样返回）；真实 key 经代理完成 Jev e2e（10 题返回，数字与 v3 回归一致）；浏览器端到端（载入演示→判据→评估）总分 95%、路由"协调维度低置信转人工"。
+
+## 11. 背景资料
 
 - TypeSafe 官方文档：https://docs.typesafe.ai/ （[llms.txt 索引](https://docs.typesafe.ai/llms.txt)）
 - 核心文档中文翻译（本机 ZCode workspace）：

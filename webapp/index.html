@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jev 简历匹配工作台</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header>
+  <h1>Jev 简历匹配工作台</h1>
+  <p class="sub">用 TypeSafe System One 模型 Jev 做简历 × JD 匹配度初筛 · 原子问题 + 校准概率 + 代码合成</p>
+</header>
+
+<main>
+  <!-- 步骤 1：配置 -->
+  <section class="card" id="step-config">
+    <h2><span class="stepnum">1</span> 配置（仅存本机浏览器）</h2>
+    <div class="grid2">
+      <fieldset>
+        <legend>Jev API（必填）</legend>
+        <label>API Key <input type="password" id="jevKey" placeholder="apikey_..." autocomplete="off"></label>
+        <p class="hint">在 console.typesafe.ai 获取；仅经本机代理转发至 api.typesafe.ai。</p>
+      </fieldset>
+      <fieldset>
+        <legend>通用 LLM（生成判据用，OpenAI 兼容）</legend>
+        <label>Base URL <input type="text" id="llmBase" placeholder="https://api.deepseek.com"></label>
+        <label>API Key <input type="password" id="llmKey" placeholder="sk-..." autocomplete="off"></label>
+        <label>模型 <input type="text" id="llmModel" placeholder="deepseek-chat"></label>
+        <p class="hint">任意 OpenAI 兼容端点（DeepSeek / GLM / OpenAI / 本地 Ollama 等）。只负责把 JD 变成判据 JSON，不参与打分。</p>
+      </fieldset>
+    </div>
+  </section>
+
+  <!-- 步骤 2：输入 -->
+  <section class="card" id="step-input">
+    <h2><span class="stepnum">2</span> 输入简历与岗位 JD</h2>
+    <div class="grid2">
+      <div>
+        <label class="lbl">候选人简历全文
+          <span class="filebtn">上传 .txt/.md<input type="file" id="resumeFile" accept=".txt,.md,.markdown,text/plain"></span>
+        </label>
+        <textarea id="resumeText" rows="14" placeholder="粘贴简历全文（PDF 请先转成文本）。发送前请剥离姓名、照片、性别、年龄、婚育等与岗位无关的属性。"></textarea>
+        <p class="hint" id="resumeCount"></p>
+      </div>
+      <div>
+        <label class="lbl">岗位 JD 全文
+          <span class="filebtn">上传 .txt/.md<input type="file" id="jdFile" accept=".txt,.md,.markdown,text/plain"></span>
+        </label>
+        <textarea id="jdText" rows="14" placeholder="粘贴完整 JD（岗位职责 / 岗位要求 / 加分项）"></textarea>
+        <p class="hint" id="jdCount"></p>
+      </div>
+    </div>
+    <button id="btnDemo" class="ghost">载入内置演示（虚构候选人「小明」+ DeepSeek 用户运营 JD）</button>
+  </section>
+
+  <!-- 步骤 3：判据 -->
+  <section class="card" id="step-criteria">
+    <h2><span class="stepnum">3</span> 生成评估判据</h2>
+    <p class="hint">换一个 JD 就该换一套判据。通用 LLM 按本项目沉淀的设计纪律起草（原子问题 / 证据化判据 / 对比式定义 / 英文判据 / 拒绝受保护属性），<strong>生成后请务必人工过目再执行</strong>——判据质量决定一切。</p>
+    <div class="btnrow">
+      <button id="btnGen">用 LLM 从 JD 生成判据</button>
+      <button id="btnUseDemoCriteria" class="ghost">载入演示判据（跳过 LLM）</button>
+      <button id="btnRevalidate" class="ghost">重新校验</button>
+    </div>
+    <div id="criteriaStatus" class="status"></div>
+    <textarea id="criteriaJson" rows="16" placeholder="判据 JSON（生成或载入后显示，可手工编辑）"></textarea>
+  </section>
+
+  <!-- 步骤 4：评估 -->
+  <section class="card" id="step-run">
+    <h2><span class="stepnum">4</span> 调用 Jev 评估</h2>
+    <button id="btnRun">调用 Jev 并合成匹配度</button>
+    <div id="runStatus" class="status"></div>
+    <div id="results" class="hidden">
+      <div class="resultHead">
+        <div class="ring" id="ring"><span id="ringVal">--</span></div>
+        <div id="routing" class="routing"></div>
+      </div>
+      <div id="gates" class="gates"></div>
+      <div id="answerCards"></div>
+      <div id="usage" class="hint"></div>
+      <p class="disclaimer">⚠️ 全部结果仅为初筛参考：Jev 判断的是「简历声称了什么」而非事实（背调独立存在）；不利决定必须由人做出；被拒堆务必抽样人工复核。</p>
+    </div>
+  </section>
+</main>
+
+<footer>
+  基于 <a href="https://github.com/nanami-0713/jev-resume-screening" target="_blank">jev-resume-screening</a> 项目构建 ·
+  Jev = TypeSafe System One 模型 · keys 仅存于浏览器 localStorage，经本机代理转发
+</footer>
+
+<script src="/criteria.js"></script>
+<script src="/demo-data.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>
