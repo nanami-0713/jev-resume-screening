@@ -48,13 +48,68 @@
   $("resumeText").addEventListener("input", countChars);
   $("jdText").addEventListener("input", countChars);
 
+  // ---------- PDF 文本提取（pdf.js，浏览器端） ----------
+  // 按基线 y 变化断行；同行内按 x 间隙补空格（仅拉丁字符间），避免中文被插入多余空格。
+  async function extractPdfText(buf, onProgress) {
+    const pdf = await pdfjsLib.getDocument({ data: buf }).promise;
+    const pages = [];
+    for (let i = 1; i <= pdf.numPages; i++) {
+      if (onProgress) onProgress(i, pdf.numPages);
+      const page = await pdf.getPage(i);
+      const tc = await page.getTextContent();
+      let line = "";
+      let prev = null;
+      for (const it of tc.items) {
+        if (typeof it.str !== "string") continue;
+        if (prev) {
+          const sameLine = Math.abs(it.transform[5] - prev.transform[5]) < 2;
+          if (!sameLine) { pages.push(line); line = ""; }
+          else {
+            const gap = it.transform[4] - (prev.transform[4] + (prev.width || 0));
+            if (gap > 1 && /\S$/.test(line) && /^\S/.test(it.str)
+                && /[\w.,;:!?%)\]]$/.test(line) && /^[\w(\[¿¡]/.test(it.str)) line += " ";
+          }
+        }
+        line += it.str;
+        prev = it;
+      }
+      if (line.trim()) pages.push(line);
+      pages.push(""); // 分页换行
+    }
+    return pages.join("\n").replace(/\n{3,}/g, "\n\n").trim();
+  }
+  window.JevResume = { extractPdfText };
+
   function bindFile(fileId, textareaId) {
-    $(fileId).addEventListener("change", (e) => {
+    $(fileId).addEventListener("change", async (e) => {
       const f = e.target.files[0];
       if (!f) return;
-      const reader = new FileReader();
-      reader.onload = () => { $(textareaId).value = String(reader.result); countChars(); };
-      reader.readAsText(f);
+      const isPdf = f.name.toLowerCase().endsWith(".pdf") || f.type === "application/pdf";
+      try {
+        if (isPdf) {
+          if (typeof pdfjsLib === "undefined") throw new Error("pdf.js 未加载");
+          pdfjsLib.GlobalWorkerOptions.workerSrc = "/vendor/pdf.worker.min.js";
+          $("resumeCount").textContent = "PDF 解析中…";
+          const buf = await f.arrayBuffer();
+          const text = await window.JevResume.extractPdfText(buf, (i, n) => {
+            $("resumeCount").textContent = `PDF 解析中… 第 ${i}/${n} 页`;
+          });
+          if (!text || text.replace(/\s/g, "").length < 30) {
+            throw new Error("这个 PDF 几乎没有文本层（可能是扫描件或图片简历），请先 OCR 或直接粘贴文本");
+          }
+          $(textareaId).value = text;
+          countChars();
+          $("resumeCount").textContent = `已从 PDF 提取 ${text.length} 字（${f.name}）`;
+        } else {
+          $(textareaId).value = String(await f.text());
+          countChars();
+        }
+      } catch (err) {
+        $("resumeCount").textContent = "⚠️ " + err.message;
+        $(textareaId).value = "";
+      } finally {
+        e.target.value = ""; // 允许重复选择同一文件
+      }
     });
   }
   bindFile("resumeFile", "resumeText");

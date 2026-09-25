@@ -31,7 +31,7 @@
       <div class="links"><button class="linklike" id="btnDemo">载入演示</button><button class="linklike" id="btnClear">清空</button></div>
     </div>
     <label class="fldlabel">候选人简历 <small>发送前请剥离姓名 / 照片 / 性别 / 年龄等与岗位无关的属性</small>
-      <span class="filebtn">上传 .txt / .md<input type="file" id="resumeFile" accept=".txt,.md,.markdown,text/plain"></span>
+      <span class="filebtn">上传 txt / md / pdf<input type="file" id="resumeFile" accept=".txt,.md,.markdown,.pdf,text/plain,application/pdf"></span>
     </label>
     <textarea id="resumeText" rows="11" placeholder="粘贴简历全文（PDF 请先转成文本）……"></textarea>
     <div class="counter"><span id="resumeCount">0 字</span><span>⌘↵ 开始匹配</span></div>
@@ -121,6 +121,7 @@
   <div class="btnrow"><button class="cta small" id="btnSaveSettings">保存</button></div>
 </dialog>
 
+<script src="/vendor/pdf.min.js"></script>
 <script src="/criteria.js"></script>
 <script src="/demo-data.js"></script>
 <script src="/app.js"></script>

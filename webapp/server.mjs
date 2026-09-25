@@ -19,6 +19,8 @@ const STATIC = {
   "/criteria.js": ["criteria.js", "text/javascript; charset=utf-8"],
   "/style.css": ["style.css", "text/css; charset=utf-8"],
   "/demo-data.js": ["demo-data.js", "text/javascript; charset=utf-8"],
+  "/vendor/pdf.min.js": ["vendor/pdf.min.js", "text/javascript; charset=utf-8"],
+  "/vendor/pdf.worker.min.js": ["vendor/pdf.worker.min.js", "text/javascript; charset=utf-8"],
 };
 
 function send(res, status, body, type = "application/json; charset=utf-8") {

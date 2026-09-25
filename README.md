@@ -135,7 +135,10 @@ resume-jd-matching/
     ├── index.html / app.js / style.css  # 四步流程前端（纯 vanilla，无构建步骤）
     ├── criteria.js                      # 判据校验器 + 合成评分/路由逻辑（浏览器与 Node 测试共用）
     ├── server.mjs                       # 零依赖本地代理（静态服务 + Jev/LLM 转发，仅监听 127.0.0.1）
-    └── demo-data.js                     # 内置演示：小明简历 + JD 原文 + v3 判据
+    ├── demo-data.js                     # 内置演示：小明简历 + JD 原文 + v3 判据
+    └── vendor/                          # pdfjs-dist@3.11.174（Apache-2.0，本地 vendored）
+        ├── pdf.min.js                   # 简历 PDF 的浏览器端文本提取（含 CJK ToUnicode 支持）
+        └── pdf.worker.min.js
 ```
 
 ## 6. 如何使用
@@ -239,7 +242,7 @@ route_to(a["dominant_background"].choice)
 - [x] 跑负对照 Case A / Case B（2026-09-19：A 十题全中 ≈0.12；B ≈0.67 < 0.8 红线，机制通过；暴露 ai 题"声称 vs 证据"判据缺口，见第 8 节）
 - [x] v3 判据修订并四例回归（2026-09-19：B ai 0.95→0.49、exceptional 0.81→0.79；小明与 A 零漂移，判据封版 v3，见第 4 节）
 - [x] Web 工作台：简历+JD → 判据 → Jev 评估的完整网站（2026-09-19：代理层与浏览器端到端均验证通过，见第 10 节）
-- [ ] Web：PDF 简历解析（当前支持粘贴或上传 .txt/.md）
+- [x] Web：PDF 简历解析（2026-09-25：pdf.js vendored 浏览器端提取；ASCII 样本 + 真实中文简历（2674 字/1949 汉字/113ms）与完整 UI 路径均验证通过）
 - [ ] Web：判据生成质量评测（跨 LLM 供应商对比 prompt 遵循度）
 - [ ] 写批量脚本：多简历并发 + 结果 CSV 落表
 - [ ] 阈值校准：自有数据上画"置信度-准确率"曲线，定 0.7/0.9 门槛
@@ -255,7 +258,7 @@ route_to(a["dominant_background"].choice)
 cd webapp && node server.mjs   # → http://127.0.0.1:8787
 ```
 
-**四步流程：** ① 配置 Jev key + 通用 LLM（OpenAI 兼容 Base URL/Key/模型，均为 BYOK，仅存浏览器 localStorage）；② 粘贴或上传简历与 JD；③ LLM 从 JD 起草判据 JSON（可手工编辑，实时 schema 校验）→ ④ 调用 Jev，渲染总分环形图、门槛状态、逐题概率条与路由建议。没有 LLM key 时可「载入演示判据」直接体验 Jev 评估（内置小明演示数据）。
+**四步流程：** ① 配置 Jev key + 通用 LLM（OpenAI 兼容 Base URL/Key/模型，均为 BYOK，仅存浏览器 localStorage）；② 粘贴或上传简历与 JD（**简历支持 PDF**：pdf.js 在浏览器端提取文本，含中文 CJK 支持与分页进度，扫描件无文本层会明确报错提示 OCR）；③ LLM 从 JD 起草判据 JSON（可手工编辑，实时 schema 校验）→ ④ 调用 Jev，渲染总分环形图、门槛状态、逐题概率条与路由建议。没有 LLM key 时可「载入演示判据」直接体验 Jev 评估（内置小明演示数据）。
 
 **架构决策（为什么需要本地代理 + 为什么需要通用 LLM）：**
 
